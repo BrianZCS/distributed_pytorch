@@ -1,0 +1,1 @@
+torchrun --nproc_per_node=1 --nnodes=4 --node_rank=0  --master_addr="172.18.0.2" --master_port=6585 main_ddp.py
