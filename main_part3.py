@@ -38,7 +38,7 @@ def train_model(model, train_loader, optimizer, criterion, epoch, args):
         outputs = model(data)
         loss = criterion(outputs, target)
         loss.backward()
-        
+
         optimizer.step()
         running_loss += loss.item()
         if batch_idx != 0:
@@ -71,14 +71,14 @@ def test_model(model, test_loader, criterion):
     print('Test set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
             test_loss, correct, len(test_loader.dataset),
             100. * correct / len(test_loader.dataset)))
-            
+
 
 def main():
     torch.manual_seed(1)
     parser = argparse.ArgumentParser(
                     prog='Input arguments',
                     description='gather ip, nunber of workers, rank')
-    parser.add_argument('--master-ip',required=True)     
+    parser.add_argument('--master-ip',required=True)
     parser.add_argument('--num-nodes',required=True, type=int)
     parser.add_argument('--rank', required=True, type=int)
     args = parser.parse_args()
@@ -87,6 +87,7 @@ def main():
     rank = args.rank
     torch.distributed.init_process_group(backend='gloo', init_method='tcp://' + master_ip + ':6585', timeout=None, world_size=num_nodes, rank=rank)
 
+    print("test")
     normalize = transforms.Normalize(mean=[x/255.0 for x in [125.3, 123.0, 113.9]],
                                 std=[x/255.0 for x in [63.0, 62.1, 66.7]])
     transform_train = transforms.Compose([
